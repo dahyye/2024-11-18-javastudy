@@ -1,4 +1,47 @@
 /*
+	  
+	  수업과정
+	  첫 주는 개념정리정도?
+	  
+	  월요일-목요일
+	  6교시(15:50) -> 수업
+	  7교시(16:50) -> 문제풀이
+	  8교시(17:50) -> 문제해결 / 하루정리시간
+	  ->프로젝트 진행할 땐 7,8교시 활용
+	  금요일 
+	  1주일동안 배운 내용 정리 / 응용
+	  	
+	  교재순서
+	  자바->오라클->알고르즘(코딩테스트때문에)->HTLM,CSS,JavaScript
+	  ->jsp->Spring-Boot->Python->데이터분석->elasticsearch
+	  
+	  실무에서 많이 사용되는건
+	  Spring, MyBatis,JSP,JavaScript(Jquery)
+	
+	==========================
+	  
+	  자바끝나면 Web으로 넘어갈 예정
+	  1. HTML : 브라우저에서 실행 ( 자바는 브라우저에서는 일반 텍스트 )
+	   		단점은 투박해 -> css / 자바스크립트
+	  2. JSP ( 요청 -> HTML을 JAVA로 변환해 , 응답 -> JAVA를 HTML로 다시 변환 )
+	  	MVC (모델, 뷰, 컨트롤)
+	  	Front(JS / TS ) / Back(자바/오라클/스프링
+	  	둘 다 하는 걸 Full Stack
+	  	
+	  3. 통합 : Framework : Spriong
+	  			기본 틀 => 메인보드
+	  4. 데이터 분석 : Python / Numpy / Pandas / Matplotlib
+	  
+	  5. NoSq1 => elasticsearch ( 오라클역할 ) 구글이 이걸 활용해서 만들었어
+	  6. 배포 : AWS
+	  약 5.5개월 소요예정
+	  
+	  ===========================
+	  추가
+	  Spring-Boot / JPA / MySQL / React-Query 
+	  Redux / Vue3 / NextJS / TypeScript / NodeJS
+	  
+	
 	자바가 호환성이 좋아
 	실무에서 spring을 많이 쓰는데 종류는 java/kotlin(무료)
 	1.대소문자 구분 중요
@@ -31,52 +74,49 @@
 	  	이쯤에서 1차과제 응용프로그램만들 수 있음(자바로만)
 	  	
 	  	라이브러리 : 자바에서 지원
-	  
-	  
-	  ==========================
-	  
-	  자바끝나면 Web으로 넘어갈 예정
-	  1. HTML : 브라우저에서 실행 ( 자바는 브라우저에서는 일반 텍스트 )
-	   		단점은 투박해 -> css / 자바스크립트
-	  2. JSP ( 요청 -> HTML을 JAVA로 변환해 , 응답 -> JAVA를 HTML로 다시 변환 )
-	  	MVC (모델, 뷰, 컨트롤)
-	  	Front(JS / TS ) / Back(자바/오라클/스프링
-	  	둘 다 하는 걸 Full Stack
-	  	
-	  3. 통합 : Framework : Spriong
-	  			기본 틀 => 메인보드
-	  4. 데이터 분석 : Python / Numpy / Pandas / Matplotlib
-	  
-	  5. NoSq1 => elasticsearch ( 오라클역할 ) 구글이 이걸 활용해서 만들었어
-	  6. 배포 : AWS
-	  약 5.5개월 소요예정
-	  
-	  ===========================
-	  추가
-	  Spring-Boot / JPA / MySQL / React-Query 
-	  Redux / Vue3 / NextJS / TypeScript / NodeJS
 	  	
 	  	
-	  교제순서
-	  자바->오라클->알고르즘(코딩테스트때문에)->HTLM,CSS,JavaScript
-	  ->jsp->Spring-Boot->Python->데이터분석->elasticsearch
 	  
-	  실무에서 많이 사용되는건
-	  Spring, MyBatis,JSP,JavaScript(Jquery)
+	  MainClass.java 클래스 생성 후 저장
+	  javaDev 폴더에 넣고
+	  cmd 열어서
+	  javac MainClass.java 입력
+	  java MainClass 입력하면 결과값 출력
+	  ( 프로젝트명 첫번째 글자는 무조건 대문자로 )
+	  
+
+	  
+	  컴파일언어 , 인터프리터 2가지가 있는데
+	  컴파일 언어( java c# c c++ )는 파일을 기계어로 변환
+	  ( 컴퓨터가 인식하는 언어로 바꿔주는 과정 )
+	  인터프리터 (HTML java ) 는 한줄씩 읽어서 출력
+	  
+	  javac.** 은 class 생성
+	  java**은 출력
 	  
 	  
-	  수업과정
-	  첫 주는 개념정리정도?
+	  1. 자바설치과정 잘 읽어보기
+	   path: c:\jdk-17.0.2\bin ->java/javac
+	   classpath : 자바에서 지원하는 라이브러리를 사용
+	   .;c:\jdk-17.0.2\lib ( 현재폴더 )
+	   
+	   2. 이클립스
+	   public class ClassNain{
+	  		프로그램의 시작
+	  		public static void main(String[] args)
+	  		{
+	  		
+	  		}
+	  		
+	  	}
+	  	
+	  	3. GIT
+	  	-> team -> shareproject
+	  	-> team -> commit
+	  	
 	  
-	  월요일-목요일
-	  6교시(15:50) -> 수업
-	  7교시(16:50) -> 문제풀이
-	  8교시(17:50) -> 문제해결 / 하루정리시간
-	  ->프로젝트 진행할 땐 7,8교시 활용
-	  금요일 
-	  1주일동안 배운 내용 정리 / 응용
-	  
-*/	 
+  
+*/	 	
 
 public class 첫번째자바 {
 
@@ -84,6 +124,7 @@ public class 첫번째자바 {
 		// TODO Auto-generated method stub
 		System.out.println("Hello Java");
 		System.out.println("방다혜");
+	
 		{
 			
 		}
