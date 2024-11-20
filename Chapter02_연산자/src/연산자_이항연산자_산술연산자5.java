@@ -43,6 +43,9 @@ public class 연산자_이항연산자_산술연산자5 {
 		int b=scan.nextInt();
 
 		System.out.println(a%b);
+		
+
+		
 	}
 
 }
