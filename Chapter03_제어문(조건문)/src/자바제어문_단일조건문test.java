@@ -102,7 +102,7 @@ public static void main(String[] arg)
 {
         int num1=10, num2=10;   
         int a, b;   
-        num1 = num1 + 1;
+        num1 = num1 + 1; // num+=1;
         a = num1;
         System.out.printf("%d, %d \n", a, num1);
         b = num2;
@@ -203,10 +203,10 @@ public class 자바제어문_단일조건문test {
 		System.out.println(a%3==0 ? a+"는(은)3의배수" : a+"는(은)3의배수가아니다");
 		*/
 		
+		
 		/* 
 		
 		11. Scanner 클래스를 이용하여 2자리의 정수(10~99사이)를 입력받고,십의 자리와 1의 자리가 같은 지 판별하여 출력하는 프로그램을 작성하라.
-
 
 	
 		*/
@@ -214,19 +214,24 @@ public class 자바제어문_단일조건문test {
 		/*
 		Scanner scan=new Scanner(System.in);
 		System.out.print("2자리 정수(10~99)를 입력해주세요 : ");
-		
+		// 받은 정수를 11로 나눠서 나머지가 0이면 앞 뒤 자리가 같음
+
 		int a=scan.nextInt();
 		int b=a/10;
 		int c=a%10;
 		
 		System.out.println(b==c ? "10의자리와 1의자리가같습니다" : "10의자리와 1의자리가다릅니다");
 		*/
+		
+		
 		/*
 		 
 		 12. 숫자를 입력받아 3~5는 봄, 6~8은 여름, 9~11은 가을, 12,1,2는 겨울, 그 외의 숫자를 입력한 경우 잘못입력을 출력하는 프로그램을 작성하라. 
 
 
 		*/
+		
+		
 		/*
 		 
 		Scanner scan=new Scanner(System.in);
@@ -249,8 +254,6 @@ public class 자바제어문_단일조건문test {
 		
 		*/
 		
-
-
 		
 	}
 
