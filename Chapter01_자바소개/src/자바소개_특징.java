@@ -139,7 +139,6 @@
  		
  		}
  	
- 	
  		자바는  CBD프로그램 조립하는 프로그램이라고 해 
  		
  	22page
@@ -160,14 +159,15 @@
  		
  		
  */
- 		
+
+import java.util.Scanner;
 
 public class 자바소개_특징 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 	
-		
+		new Scanner(null)
 		
 		  System.out.println(); System.out.println(); System.out.println();
 		  System.out.println(); System.out.println(); System.out.println();
