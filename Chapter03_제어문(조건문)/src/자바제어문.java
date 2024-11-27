@@ -88,6 +88,13 @@
  			switch~case (값을 1개만 선택해서 처리)->게임에서 많이 사용, 키값에 따라 처리
  			=> 다중조건문이랑 비슷하지만 switch~case는 값을 1개만 선택하는 것,
  									다중조건문은 범위를 선택하는 것의 차이
+ 									
+ 									
+ 					=> 다른 데이터형이 필요할 때는 변경 (String)
+ 					=>Integer.parseInt("10") => 10
+ 					  Double.parseDouble("5.0) => 5.0
+ 					  Byte / Boolean => Wrapper
+ 					  char[] => 제어 => String
  			switch(정수/문자/문자열)
  				case 값1 :
  					실행문장
@@ -183,10 +190,25 @@
  				
  			
  		4. 반복제어문
- 			break
+ 			break => 소속문장만 제어할 수 있는데
+ 					outer:for()
+ 					{
+ 						for()
+ 						{
+ 							break outer;
+ 						}
+ 					}
+ 					
+ 					outer을 사용하면 선택제어가 가능하지만 거의 사용하지 않아
  			continue => 특정부분을 제외시킬 때 사용
  		
  	
+ 	
+ 		잘 짠 프로그램 기준
+ 		1. 가독성
+ 		2. 최적화
+ 		3. 유지보수
+ 		4. 공통모듈(반복을 최대한 제거) -> AOP
  */
 
 
