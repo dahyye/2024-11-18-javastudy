@@ -17,6 +17,9 @@ public class 배열정리_추가내용 {
 		int[] arr= {10, 20, 30, 40, 50};
 		//int[] arr_copy=arr; // 다른 주소값을 가지고 데이터를 변경해도 arr_copy값만 바뀐다
 		int[] arr_copy=arr.clone();
+		//깊은 복사 => 아바타 => prototype => proxy패턴
+		//디자인 패턴 => 싱글턴, Factory..... tmvmflddptjsms 8rovoxjs
+		// GOF=>23패턴
 		System.out.println(Arrays.toString(arr));
 		System.out.println(Arrays.toString(arr_copy));
 		System.out.println("arr="+arr);
