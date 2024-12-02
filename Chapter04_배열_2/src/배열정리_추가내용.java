@@ -7,6 +7,9 @@
  
  
  */
+
+import java.util.Arrays;
+
 public class 배열정리_추가내용 {
 
 	public static void main(String[] args) {
@@ -14,6 +17,8 @@ public class 배열정리_추가내용 {
 		int[] arr= {10, 20, 30, 40, 50};
 		//int[] arr_copy=arr; // 다른 주소값을 가지고 데이터를 변경해도 arr_copy값만 바뀐다
 		int[] arr_copy=arr.clone();
+		System.out.println(Arrays.toString(arr));
+		System.out.println(Arrays.toString(arr_copy));
 		System.out.println("arr="+arr);
 		System.out.println("arr_copy="+arr_copy); //arr와 같은 주소값 출력
 		
@@ -25,6 +30,11 @@ public class 배열정리_추가내용 {
 		arr_copy[4]=500;
 
 		for(int i:arr)
+		{
+			System.out.print(i+" "); //arr의 값도 변경된 걸 확인
+		}
+		System.out.println();
+		for(int i:arr_copy)
 		{
 			System.out.print(i+" "); //arr의 값도 변경된 걸 확인
 		}
