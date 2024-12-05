@@ -16,6 +16,7 @@
 14. 메소드를 정의하여 입력받은 숫자를 거꾸로 뒤집은 쉬를 출력하는 프로그램을 작성하세요=7
  */
 import java.util.*;
+import java.util.concurrent.CancellationException;
 public class 메소드_test {
 
 	static void print(int num)
@@ -155,14 +156,14 @@ public class 메소드_test {
 	
 	static void date(int year, int month, int day)
 	{
-		int total=(year-1)*365
+		int total=(year-1)*365  //year-1전년도까지니까 내가 선택한 년도-1
 				+(year-1)/4
 				-(year-1)/100
 				+(year-1)/400;  //윤년처리
 	
 		//전달까지의 날 수
-		int[] lastday= {31,25,31,30,31,30,31,31,30,31,30,31};  //월별 날 수
-		if(year%4==0 && year%100!=0 || year%400==0)
+		int[] lastday= {31,28,31,30,31,30,31,31,30,31,30,31};  //월별 날 수
+		if(check_year(year))
 			lastday[1]=29;
 		else
 			lastday[1]=28; //2월날짜 변경하기 위한 코드
@@ -175,13 +176,24 @@ public class 메소드_test {
 		//입력날
 		total+=day;  // 
 		//요일구하기
-		char[] strWeek= {'일', '월', '화', '수', '목', '금', '토'};
+		char[] strWeek= {'일', '월', '화', '수', '목', '금', '토'}; // switch case 배신 배열 활용
 		int week = total%7;
 		
 		System.out.println(year+"년도\t"+month+"월"+strWeek[week]+"요일입니다");
 		System.out.println();
-	
+		
+		//리턴하고 싶으면 return strWeek[week];
+		
+//		Calendar cal = Calendar.getInstance();
+//		cal.set(Calendar.YEAR,year);
+//		cal.set(Calendar.YEAR,month-1);
+//		cal.set(Calendar.YEAR,day);
+//		int week=cal.get(Calendar.DAY_OF_WEEK);
+//		return strWeek[week-1]; //week는 1~7
+		//나중에 Calendar 함수를 이용하면 훨씬 쉽게 구할 수 있다
 	}
+	
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 //		int num=10;
