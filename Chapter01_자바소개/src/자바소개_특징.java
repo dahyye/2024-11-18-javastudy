@@ -167,7 +167,7 @@ public class 자바소개_특징 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 	
-		new Scanner(null)
+	
 		
 		  System.out.println(); System.out.println(); System.out.println();
 		  System.out.println(); System.out.println(); System.out.println();

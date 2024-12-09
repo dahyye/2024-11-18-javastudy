@@ -94,6 +94,19 @@
 		2. 저장된 데이터 활용
 		3. 결과물 출력
 	
+	
+	
+	public class Variable {
+
+    	public static int age = 20; // 클래스 변수(전역 변수)
+	
+    	int height = 60; // 인스턴스 변수(전역 변수)
+
+    	public static void main(String[] args) { // 매개변수(파라미터)
+        	int size = 50; // 지역변수
+
+    	}
+	}
 
 
 
