@@ -82,11 +82,54 @@ public class MovieSystem {
 	//상세보기
 	public Movie movieDetail(int no)
 	{
+		
 		return movies[no-1];
 	}
 	
 	//검색
-	
+	public void movieSearch(String tn, int num)
+	{
+		int count=0;
+		int j=0;
+		if(num==1)
+		{	
+			for(int i=0;i<movies.length;i++)
+			{
+				if(movies[i].title.contains(tn))
+					count++;
+				
+			}
+			Movie[] movieSearchData= new Movie[count];
+			for(int i=0;i<movies.length;i++)
+			{
+				if(movies[i].title.contains(tn))
+				{
+					
+					System.out.println(movies[i].no+"."+movies[i].title);
+				}
+			}
+		}
+		else
+		{	
+			for(int i=0;i<movies.length;i++)
+			{
+				if(movies[i].actor.contains(tn))
+					count++;
+				
+			}
+			Movie[] movieSearchData= new Movie[count];
+			for(int i=0;i<movies.length;i++)
+			{
+				if(movies[i].actor.contains(tn))
+				{
+					
+					System.out.println(movies[i].no+"."+movies[i].title+"("+movies[i].actor+")");
+				}
+			}
+			
+		}	
+		
+	}
 	
 	
 }

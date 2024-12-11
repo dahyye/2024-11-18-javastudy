@@ -45,11 +45,24 @@ public class MovieUserMain {
 				System.out.println("등급 : "+ movie.grade);
 				System.out.println("개봉일 : "+ movie.regdate);
 			}
-			else if(menu==3)
+			else if(menu==3||menu==4)
 			{
-				System.out.println("검색할 영화명 입력 : ");
-				String n=scan.next();
+				System.out.println("영화명검색(1) 배우별검색(2) : ");
+				int num=scan.nextInt();
+				if(num==1)
+				{
+					System.out.println("검색할 영화명 입력 : ");
+					String tn=scan.next();
+					ms.movieSearch(tn,num);
+				}
+				else
+				{
+					System.out.println("검색할 배우명 입력 : ");
+					String tn=scan.next();
+					ms.movieSearch(tn,num);
+				}
 			}
+			
 			
 		}
 	}

@@ -46,7 +46,7 @@ class PlayingCard// 다른 클래스에서도 사용이 가능해
 			num = n; //지역변수
 
 	} 
-
+}
 	
 class Member
 {
