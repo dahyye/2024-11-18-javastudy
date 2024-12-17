@@ -42,7 +42,7 @@ public class 숫자야구게임 extends JFrame implements ActionListener{
 		ta = new JTextArea();
 		JScrollPane js = new JScrollPane(ta); // 스크롤 생성(가로세로 스크롤 모두 가능), JScrollBar가 합쳐진 형태의 component
 		ta.setEditable(false); //편집 방지
-		tf = new JTextField();
+		tf = new JTextField(10); //(크기지정)
 		tf.setEditable(false); //비활성화
 		b1 = new JButton("시작버튼");
 		b2 = new JButton("종료버튼");
@@ -50,7 +50,9 @@ public class 숫자야구게임 extends JFrame implements ActionListener{
 		JPanel p = new JPanel();
 		p.add(tf);
 		p.add(b1);
+		//b1.setBounds(165, 15, 100, 30);
 		p.add(b2);
+		//b2.setBounds(270, 15, 100, 30);
 		
 		add("Center",js);
 		add("South", p);
@@ -63,6 +65,7 @@ public class 숫자야구게임 extends JFrame implements ActionListener{
 		b1.addActionListener(this); //this -> 자신이 가지고 있는 actionPerformed를 호출해라
 		//만약 마우스를 처리하려명 addMouselistener();
 		b2.addActionListener(this);
+		tf.addActionListener(this);
 	}
 	
 	
@@ -104,7 +107,7 @@ public class 숫자야구게임 extends JFrame implements ActionListener{
 		else if(e.getSource()==b1)
 		{
 			getRand();
-			tf.setEditable(true);
+			tf.setEditable(true);  //
 			tf.requestFocus();
 			b1.setEnabled(false);
 		}

@@ -13,9 +13,21 @@ package com.sist.exception;
  				
  				순서는 크기가 작은 순서부터 배치
  				
- 			
- 		Error
- 		 
+ 	try
+ 	{
+ 	
+ 	}
+ 	catch
+ 	{
+ 	
+ 	}		
+ 	finally
+ 	{
+ 		=> try/catch => 상관없이 무조건 수행문장
+ 		=> 파일닫기
+ 		=>오라클 연결 해제
+ 		=> 서벼 연결 종료
+ 	}
  	 	
  	 	
  */
