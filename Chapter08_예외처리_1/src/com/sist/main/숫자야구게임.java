@@ -96,7 +96,7 @@ public class 숫자야구게임 extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		//여기서 난수를 발생시키면 사용할 수가 없어
-		if(e.getSource()==b2)
+		if(e.getSource()==b2)  //이벤트가 발생한 객체에 대한 참조를 리턴
 		{
 			int sel=JOptionPane.showConfirmDialog(this,"종료할까요?","종료",JOptionPane.YES_NO_OPTION);
 			if(sel==JOptionPane.YES_OPTION)  //YES_OPTION가 상수로 되어 있다
