@@ -106,8 +106,10 @@ import java.util.Set;
  		
  	
  	266page 계층도
- 	
- 										object
+ 						예외를 잡을 수 있는 능력은 상위클래스일수록 크다
+ 						=> 잘 모르면 catch(Exception e) 넣으면 대부분의 에러는 잡아줄 수 있다
+ 						
+ 									 object
  									  	|
  								   	Throwable
  								      	|
@@ -132,11 +134,11 @@ import java.util.Set;
  							 -> 메모리											   => " 10"-> 정수형 변경이 안된다->trim()
  							 -> 네트워크											   => 웹에서는 board_llis.jsp?page = 10 => 오류
  																												---공백있으면 오류 																																			
- 							SQLException : 오라클								
-	 							오라클(데이터베이스)
-	 							-> SQL문장
-	 							-> INSERT/UPDATE/DELETE
-	 							   SELECT
+ 							SQLException : 오라클														.
+	 							오라클(데이터베이스)														.
+	 							-> SQL문장															.	
+	 							-> INSERT/UPDATE/DELETE												.
+	 							   SELECT													    아래에서 확인
 	 							   ------JOIN / SUBQUERY
 	 							   ------FUNCTION
 	 							   		 PROCEDURE
@@ -166,7 +168,8 @@ import java.util.Set;
  							***	 500 => 자바 소스 오류
  								 415 => 한글 변환코드 오류	
  									
- 								
+ 	-------------------------------------------------------------------------------------------------------------------------------							
+ 						
  						UncheckException
  							=> RuntimeException
  									ArrayIndexOutOfBoundsException : 배열범위 초과
@@ -183,6 +186,10 @@ import java.util.Set;
  										B b=(B)a; => 이렇게 사용해야해
  									NumberFormatException : 문자열을 정수형으로 반환할 때 생기는 오류
 
+ 				
+ 				
+ 				
+ 				
  				
  			=> catch 여러개인 경우
  				계층 순서로 적용
