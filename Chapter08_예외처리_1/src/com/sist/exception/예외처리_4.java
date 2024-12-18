@@ -57,24 +57,28 @@ public class 예외처리_4 {
 			System.out.println(e.getMessage());
 			//에러 위치 출력
 			e.printStackTrace(); //초반에는 이 코드를 권장
+			System.out.println(e.toString());
 		}
 		catch (ArithmeticException e)
 		{
 			// TODO: handle exception
-			System.out.println("0으로 나눌 수 없다");
+			//System.out.println("0으로 나눌 수 없다");
 			System.out.println(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println(e.toString());
 		}
 		catch (NumberFormatException e) {
 			// TODO: handle exception
 			System.out.println("정수변환문제");
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			System.out.println(e.toString());
 		}
 		catch (RuntimeException e) //ArrayIndexOutOfBoundsException와 ArithmeticException를 동시에 할 수 있는 예외처리
 		{
 			// TODO: handle exception
-			System.out.println("오류발생");  //통으로 잡으면 코드짜기는 쉽지만 어디서 오류가 생긴거지 확인하기가 어려워
+			System.out.println("오류발생");
+			System.out.println(e.toString());//통으로 잡으면 코드짜기는 쉽지만 어디서 오류가 생긴거지 확인하기가 어려워
 											//가급적이면 하나씩 잡는게 좋아 
 		}
 		System.out.println("정상수행");

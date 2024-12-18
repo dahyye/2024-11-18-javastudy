@@ -18,7 +18,7 @@ public class MelonMusicSystem extends GenieMusicSystem{
 			//정상적으로 수행하는 문장이 들어간다
 			Document doc=Jsoup.connect("https://www.melon.com/chart/index.htm").get();
 			Elements title= doc.select("div.wrap_song_info div.rank01");
-			Elements singer= doc.select("div.wrap_song_info div.rank02");
+			Elements singer= doc.select("div.wrap_song_info a.span rank02");  //span a 멜론에서 데이터 가져올 때 2번가져오는데 중복제거
 			Elements album= doc.select("div.wrap_song_info div.rank03"); //import 넣을 떄 잘 선택해야해
 			
 			for(int i=0;i<50;i++)
