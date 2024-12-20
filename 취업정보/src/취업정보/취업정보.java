@@ -2,6 +2,7 @@
  	back end - 자바, c#, C++, 파이썬, 코틀린, GO, Dart => 객제지향
  	
  		자바 (JSP, Spring, GO, Dart)   파이썬(DJangto)
+ 		** 자바 / 오라클 / 스프링은 기본으로 해야해
  	
  	front end - JavaScript : NodeJS, ReactJS VueJs
  	
