@@ -21,7 +21,7 @@ package com.sist.util;
  			gc() : 메모리 즉시 회수
  			exit() : 프로그램 종료
  			
- 		5. Wrapper : 데이트형을 클래스화 / 제네릭스
+ 		5. Wrapper : 데이트형을 클래스화 / 제네릭스<>
  			Integer -> parseInt()
  			Double -> parseDouble
  			Boolean -> parseBoolean()
@@ -62,7 +62,9 @@ package com.sist.util;
  					Queue
  			
  			=> 웹에서는 배열을 잘 안스고 대부분 ArrayList를 사용
- 			 (배열은 크기가 고정되어 있기 때문에
+ 			 (배열은 크기가 고정되어 있기 때문에)
+ 			 
+ 			 
  			
  
  
