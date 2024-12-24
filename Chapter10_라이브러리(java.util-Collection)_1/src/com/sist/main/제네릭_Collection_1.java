@@ -71,7 +71,7 @@ public class 제네릭_Collection_1 {
 		List list = new ArrayList();
 		
 		Member1 mem1 = new Member1();
-		mem1.setName("홍길동");
+
 		
 	}
 
