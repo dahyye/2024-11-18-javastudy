@@ -16,7 +16,7 @@ public class ClientChatMain extends JFrame implements ActionListener, Runnable{
 	JTextArea ta; //텍스트가 출력되는 공간
 	private String name;
 	//서버연결 -> 네트워크 관련
-	Socket s;
+	Socket s;//클라이언트 소켓 생성
 	//단방향(보냄과 동시에 받을 순 없다)
 	OutputStream out;  //서버에서 들어오는 값은 자동화처리
 	BufferedReader in; 
@@ -62,7 +62,7 @@ public class ClientChatMain extends JFrame implements ActionListener, Runnable{
 			while(true)
 			{
 				String msg = in.readLine();
-				//서버에서 전송한 값
+				//서버에서 전송한 값 수신
 				ta.append(msg+"\n");
 			}
 		} catch (Exception e) {
@@ -84,9 +84,9 @@ public class ClientChatMain extends JFrame implements ActionListener, Runnable{
 			name = JOptionPane.showInputDialog("이름 입력 : ");
 	
 			try {
-				//서버연결
+				//클라이언트 서버연결
 				s=new Socket("192.168.10.107",3050);
-				//송수신
+				//송수신 스트림 생성
 				out = s.getOutputStream();//서버아이피에 연결해서 값을 보내겠다
 				in = new BufferedReader(new InputStreamReader(s.getInputStream())); 
 				//getInputStream 을 getInputStream(2바이트로 변환해서) 값을 받는다
@@ -110,10 +110,11 @@ public class ClientChatMain extends JFrame implements ActionListener, Runnable{
 			}
 			
 			try {
-				out.write(("["+name+"]"+msg+"\n").getBytes());
-				
+				out.write(("["+name+"]"+msg+"\n").getBytes()); //서버로 데이터 전송
+				//getBytes 바이트배열로 반
 			} catch (Exception e2) {
 				// TODO: handle exception
+				
 			}
 			tf.setText("");
 		}

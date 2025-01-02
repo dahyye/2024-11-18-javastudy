@@ -24,7 +24,7 @@ public class Server implements Runnable {
 	public Server()
 	{
 		try {
-			
+			//서버 소켓 생성
 			ss=new ServerSocket(PORT);
 			//bind -> ip/port연결 -> 유심(개통)
 			//listen() -> 대기상태
