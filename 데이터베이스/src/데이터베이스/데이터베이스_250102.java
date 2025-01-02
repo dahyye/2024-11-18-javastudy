@@ -443,6 +443,7 @@ package 데이터베이스;
  				GROUP BY 그룹컬럼 => 그룹별로 통계(부서별, 직위별, 입사일)
  				HAVING 그룹 조건 => GROUP BY가 있는 경우에만 사용이가능
  				ORDER BY 컬럼명 => 정렬
+ 								ASC(생략이 가능), DESC
  			]
  			    
  	
@@ -476,15 +477,182 @@ package 데이터베이스;
 		    
 	------------------------------------------------------------------------------------------
 	
-	book테이블
-	BOOKID		NUMBER(2)		=> 숫자 2자리까지 사용
- 	BOOKNAME	VARCHAR2(40)	=> 문자열 영문/숫자 40자
- 	PUBLISHER	VARCHAR2(40)		한글(글자당 3byte)일 땐 13자
- 	PRICE		NUMBER(8)		=> 숫자 8자리까지 사용
- 			  **DATE 			=> 날짜형
+	1. DESC table명으로 컬럼 확인
+		DESC : 특정 테이블에 어떤 칼럼이 있는지 구조가 무엇인지 조회하는 명령어
+				테이블에 저장된 순서를 보여준다
+	2. 데이터형 확인
+		문자열 : CHAR VARCHAR2(가변형), CLOB
+		숫자 : NUMBER(8)-정수형, NUMBER(2,1)-실수형
+		날짜 : DATE, TIMESTAMP
+		기타(사진, 동영상) : BLOB, BFILE
+	3. 테이블명 확인
+					
+		테이블명 : book
+	
+		BOOKID		NUMBER(2)		=> 숫자 2자리까지 사용
+	 	BOOKNAME	VARCHAR2(40)	=> 문자열 영문/숫자 40자
+	 	PUBLISHER	VARCHAR2(40)		한글(글자당 3byte)일 땐 13자
+	 	PRICE		NUMBER(8)		=> 숫자 8자리까지 사용
+	 			  **DATE 			=> 날짜형
+		   
 		    
- 			    
- */								
+	146~148page	    
+ 	
+ 	-- 모든 도서의 이름과  가격을 검색
+	SELECT bookname,price 
+	FROM book;
+	
+	SELECT price,bookname
+	FROM book;
+	//순서상관없다
+	
+	
+	
+	
+ 	--모든 도서의 도서번호, 도서이름, 출판사, 가격을 출력
+
+	SELECT bookid,bookname,publisher,price 
+	FROM book;
+	
+	SELECT *
+	FROM book;
+	
+	//*을 사용하면 순서가 테이블 생성할 때 지정된 순서
+	
+	--테이블에 있는 모든 출판사를 출력
+	SELECT publisher
+	FROM book;
+	
+	--중복제거
+	SELECT DISTINCT publisher 
+	FROM book;
+		    
+ 
+ 			 
+ ----------------------------------------------------------------------
+ 
+ 	DQL
+ 	
+ 	emp테이블
+ 	empno 사원번호 => 기본키(중복이 없다)
+ 	ename : 이름 			문자열
+ 	job : 직원			문자열
+ 	mgr : 사수 번호		정수
+ 	hiredate : 입사일		날짜형
+ 	sal : 급여			정수-설정은실수형
+ 	comm : 성과급			정수
+ 	depno : 부서번호		정수(depl테이블과 JOIN하기 위한)
+ 	
+ 	
+ 	--문자열결합 연습
+	-- KING은 직위가 xxxx이다
+		출력결과 예시 ) KING은 직위가 PRESIDENT이다
+		
+		SELECT ename||'은 직위가 '||job||'이다'
+		FROM emp;
+		//컬럼은 변수처럼 사용한다
+ 
+ ----------------------------------------------------------------------
+ 
+ 	149page
+ 	연산자
+ 	*null 값은 연산처리가 안된다 => 결과값이 다 null
+ 	 1. 산술 연산자 : SELECT 뒤에서 사용
+ 	 			   +,-,*,/ -> %(mod함수)
+ 	 			   순수하게 숫자만 처리
+ 	 			   정수/정수 -> 실수
+ 	 			   WHERE에서는 사용하지 않는다
+				   가로단위는 통계가 안된다
+				   
+ 	 2. 비교 연산자 : WHERE문장 뒤에 사용한다
+ 	 				문자열/ 날짜/숫자 => 전체 비교가 가능하다
+ 	 				
+ 	 			   (오라클 = , 자바 == , 자바스크립트 ===  다 다르기 때문에 잘 외워야한다)
+ 	 			   같다 		=
+ 	 			   같지않다	!=, <>(권장사항), ^=
+ 	 			   크다		>
+ 	 			   작다		<
+ 	 			   크거나같다	>=
+ 	 			   작거나 같다 <=
+ 	 			   
+ 	 			   
+ 	 			  
+ 	 	형식) 
+ 	 			SELECT ~
+ 	 			FROM 테이블명
+ 	 			WHERE 조건문 ==> 조건문이 true일 때 실행
+ 	 			  
+ 	 3. 논리 연산지 : 
+ 	 			   직렬연산자 => AND ( & -> 입력) , 범위나 기간을 포함할 때
+ 	 			   병렬연산자 => OR  (|| -> 문자열결합) , 범위나 기간 밖에 있을 때 사용
+ 	 			
+ 	 			조건 AND 조건     조건 OR 조건
+ 	 
+ 	 4. 대입 연산자
+ 	 
+ 	---------------
+ 	 5. IN 
+ 	 		OR가 여러개일 때 사용
+ 	 		WHERE ename IN('KING', 'CLARK','ALLEN','WARD','FORD','SCOTT');
+ 	 		
+ 	 6. NOT
+ 	 		부정연산자
+ 	 		WHERE job NOT IN('MANAGER','CLERK');
+ 	 		//MANAGER 이 아니고 또는 CLERK이 아닌 경우를 출력할 때
+ 	 7. NULL
+ 	 		IS NULL => null인 경우
+ 	 		WHERE mgr IS NULL;
+ 	 		
+ 	 		IS NOT NULL => null이 아닌 경우
+ 	 		WHERE mgr IS NOT NULL;
+ 	 		//0은 NULL값이 아니다
+ 	 		//브라우저에서 null값이 경우에 'null'을 출력 
+ 	 8. BETWEEN~AND
+ 	 		A에서 B사이의 데이터를 가져올 때 사용
+ 	 		WHERE hiredate BETWEEN start AND end  
+ 	 		조건 A, B를 모두 포함한다
+ 	 		hiredate BETWEEN A AND B -> hiredate>=A AND hiredate<=B
+ 	 9. LIKE
+ 	 		--------------------------------
+ 	 		자바에서 검색할 때
+ 	 			startsWith : 시작하는 문자열이 같을 때
+ 	 			endsWith : 끝나는 문자열이 같을 때
+ 	 			contains : 포함
+ 	 		--------------------------------
+ 	 		오라클에서 검색할 때(글자수를 모르는 경우)
+	 	 		WHERE 컬럼명 LIKE '문자열%' 문자열로 시작하는 문장을 찾는다
+	 	 		WHERE 컬럼명 LIKE '%문자열' 문자열로 끝나는 문장을 찾는다
+	 	 		**%는 문자열의 갯수를 모르는 경우 사용
+	 	 		WHERE 컬럼명 LIKE '%문자열%' 문자열을 포함하는 모든 문장을 찾는다
+ 	 		오라클에서 검색할 때(글자수를 알 때)
+ 	 			5글자 중 가운데가 o -> '__o__'
+ 	 			4글자 중 2번째가 k -> '_k__'
+ 	 		
+ 	 
+ 	-------------------------------------------------------------------------------
+ 	
+ 	 	오라클에 데이터를 첨부 => 공유를 한다는 뜻(모든 사용자가 동일하게 본다)
+ 	 	공유된 데이터를 실시간으로 수정/삭제/추가할 수 있다
+ 	 	
+ 	 	SQL문장 형식
+ 	 	=> SELECT 
+ 	 		형식, 순서 중요
+ 	 		조건처리(연산자)
+ 	 		내장함수
+ 	 		JOIN형식 / SubQuery 	
+ 	 	=> UPDATE / DELETE / INSERT
+ 	 	------------------------------> DML(기본)
+ 	 	Table / View / Index / Procedure / Function / Trigger / Sequence
+ 	 	----------------------------------------------------------------->
+ 	 	 
+ 	 	Procedure / Function / Trigger => PL-SQL (기능을 만드는 SQL)
+ 	 
+ 	 
+ 	 
+ 	 
+ 	 
+ 	 
+ */			
 
 public class 데이터베이스_250102 {
 	
