@@ -160,9 +160,9 @@ package 데이터베이스;
  				사용위치 -> SELECT, WHERE, GROUP BY, ORDER BY뒤에 사용
  				사용자 정의 함수도 존재
  				CREATE FUNCTION GKATN
- 		단일행함수 : ROW 단위 처리, 한줄씩 처리
+ 		1) 단일행함수 : ROW 단위 처리, 한줄씩 처리
  			문자 함수 String
- 				LENGTH(), LENGTHB():바이트 수
+ 				*LENGTH(), LENGTHB():바이트 수
  				EX. LENGTH('ABC') -> 3
  					LENGTH('홍길동') -> 3
  					LENGTHB('ABC') -> 3BYTE
@@ -172,40 +172,106 @@ package 데이터베이스;
  					CHAR(1~2000byte)
  					VARCHAR2(1~4000byte)
  					CLOB(1~4GB) //줄거리, 회사소개
- 					
- 				UPPER() : 대문자 변환할 때 사용 -> String에서 처리후에 전송하는게 편할 수 있다
- 					UPPER('abc') => ABC
- 				LOWER() : 소문자 변환할 때 사용
- 					LOWER('ABC') => abc
+ 				
+ 				UPPER / LOWER
+	 				UPPER() : 대문자 변환할 때 사용 -> String에서 처리후에 전송하는게 편할 수 있다
+	 						  오라클 명령문은 대소문자 구분이 없지만 실제 저장된 데이터는 대소문자 구분해야함
+	 					UPPER('abc') => ABC
+	 				LOWER() : 소문자 변환할 때 사용
+	 					LOWER('ABC') => abc
  				INITCAP() : 이니셜 변환 -> 첫자만 대문자
  					INITCAP('abc')-> Abc
- 				LPAD
- 					LPAD(문자열,문자갯수,출력문자)
- 					LPAD('admin',10,'*')
- 						=> *****adimin
- 				RPAD
- 					RPAD('admin',10,'*')
- 						=> adimin***** => id찾기
- 										  비밀번호는 이메일전송으로 해야해(보안)
- 												  ------- javaMail
+ 					
+ 				*REPLACE : 데이터 수집할 때 사용 -> 오라클 저장(&, |)
+ 					REPLACE(문자열(old), 문자열(new))
+ 						EX. a.jsp?name=aaa&id=bbb
+ 								  ---------------구분자
+ 				LPAD / RPAD
+	 				LPAD : 모자라는 위치에 원하는 문자 추가
+	 					LPAD(문자열,문자갯수,출력문자)
+	 					LPAD('admin',10,'*')
+	 						=> *****adimin
+	 				*RPAD
+	 					RPAD('admin',10,'*')
+	 						=> adimin***** => id찾기
+	 										  비밀번호는 이메일전송으로 해야해(보안)
+	 												  ------- javaMail
 				LTRIM / RTRIM / TRIM : 좌우의 문자 제거, 공백 제거
 					LTRIM(문자열,'제거할문자')
 					LTRIM('aaaHongaaa','a') => Hongaaa
 					RTRIM('aaaHongaaa','a') => aaaHong
 					TRIM('a' FROM 'aaaHongaaa') => Hong
-					
-				SUBSTR : 문자열을 자를 때 사용(자바의 subString()과 같은 역할)
+				
+				CONCAT() => 문자열 결합
+					CONCAT(문자열, 문자열) : MySQL에서 LIKE문장 처리할 때 사용
+						EX. CONCAT('Hello','Oracle') => HelloOracle -> 오라클에서는 || 사용하는 경우가 더 많다
+						
+				*SUBSTR : 문자열을 자를 때 사용(자바의 subString()과 같은 역할)
 					SUBSTR(문자열,시작번호,갯수)
 					SUBSTR('abcdefg',1,3) 1에서부터 3글자 -> abc
+					
+				*INSTR : indexOf 문자찾기
+					INSTR(문자열, 문자, 시작위치, 몇번)
 				
- 		 	숫자 함수 Math
- 		 	날짜 함수 Calender
- 		 	변환 함수 Format
- 		 	기타 함수 NULL처리, 다중 조건문, 선택문
+ 		 	숫자 함수 : NUMBER -> Math
+ 		 		MOD : 나머지 구할 때
+ 		 			MOD(10,2) => 10%2
+ 		 		---------------------	
+ 		 		ROUND : 반올림
+ 		 		TRUNC : 버림
+ 		 		---------------------날짜(시간/분/초) -> LONG -> 퇴직금
+ 		 		CEIL : 올림 -> 총페이지 구할 때 사용
+ 		 	날짜 함수 : DATE -> Calender
+ 		 		SYSDATE : 현재 시스템의 시간 / 날짜
+ 		 				-> 등록일을 저장
+ 		 		MONTHS_BETWEEN : 기간사이의 개월수
+ 		 		ADD_MONTHS : 개월 추가
+ 		 		 	EX. ADD_MONTHS('24/11/18',7) -> 적금 / 보험만기
+ 		 		NEXT_DAY / LAST_DAY
+ 		 	변환 함수 : Format -> 날짜변환 / 숫자변환 / 문자변환
+ 		 		*TO_CHAR : 문자열로 변환
+ 		 		TO_NUMBER : 정수형 변환
+ 		 			-> TO_NUMBER('10')+1 -> '10'+1 -> 11 ( 자동변환 )
+ 		 		*TO_DATE : 날짜 변환
+ 		 			-> 예약일 : DATE로 설정
+ 		 			-> 자바에서는 문자열로 전송 -> 오라클에 넣으면 오류(내부변환이 안된다)
+ 		 			-> 날짜를 문자열로 받을지 DATE로 받을 지 선택
+ 		 			
+ 		 	기타 함수 : NULL처리, 다중 조건문, 선택문
+ 		 		*NVL : null을 다른 값으로 대체
+ 		 			NVL(데이터형,값) : 데이터값이 null이면 지정된 값으로 변경해라
+ 		 						   -> null값인 경우에는 연산처리가 안된다
+ 		 		DECODE : 다중 조건문
+ 		 		*CASE : 선택문(swtich~case)
+ 		 		---------------------------PL/SQL에서 사용
  		 	
  		 	
- 		집합행함수
- 			
+ 		2) 집합행함수 : Column단위로 처리 => 통계
+ 			COUNT : ROW의 갯수
+ 				-> 검색결과 / 로그인처리 / 아이디중복 / 장바구니
+ 			SUM : 합을 구할 때 사용
+ 			AVG : 평균
+ 			MIN : 최소값
+ 			MAX : 최대값
+ 			RANK : 순위
+ 				RANK -> 1, 2, 2, 4
+ 			DENSE_RANK
+ 				DENSE_RANK -> 1, 2, 2, 3 
+ 			---------------------------
+ 			CUBE :
+ 			ROLLUP :
+ 			-----------------------> GROUP BY
+ 		3) GROUP BY 그룹별 처리
+ 		4) 테이블 두개 이상 연결 데이터 추출 : JOIN
+ 		5) 서브쿼리
+ 		-------------------------------------------------- SELECT 문장
+ 		DDL : 테이블제작 -> DML(INSERT / UPDATE / DELETE)
+ 			  VEIW / SEQUENCE / INDEX / PL~SQL
+ 			 
+ 		정규화 / 제약조건
+ 		--------------------------------------------------
+ 		 
+ 		 
  	4. 여러개 테이블을 연결
  		조인
  		서브쿼리(부속질의)
