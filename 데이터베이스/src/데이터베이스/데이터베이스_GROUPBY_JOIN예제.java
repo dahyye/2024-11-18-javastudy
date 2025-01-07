@@ -53,8 +53,9 @@ SELECT deptno,avg(sal), COUNT(*)
 FROM emp
 GROUP BY deptno
 HAVING avg(sal)>=2000
-
+=====================================================================================
 JOIN 문제
+
 1. 사원 이름이 SCOTT인 사원의 사번(empno), 이름(ename), 부서명(dname)를 출력하세요.
 SELECT empno, ename, dname
 FROM emp, dept
