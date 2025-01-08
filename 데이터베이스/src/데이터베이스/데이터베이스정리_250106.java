@@ -1,7 +1,8 @@
 package 데이터베이스;
 /*
  
- 
+ 	데이터 검색 : SELECT => 웹(50%) -> INSERT / UPDATE / DELETE(20%) -> DDL(테이블설계) 30%
+ 	
  
  	컬럼명이 길거나 알 수 없는 경우 => 별칭사용
  		컬럼명 "별칭" , 컬럼명 as 별칭
@@ -92,6 +93,44 @@ package 데이터베이스;
  			MAX : 최대 -> 자동증가번호 만들 떄 사용
  			MIN : 최소
  			COUNT : ROW의 갯수 -> 저장된 갯수
+ 			
+	==============================================================================
+		--가지고 있는 테이블전체 확인
+	 	SELECT * 
+		FROM tab;
+		
+		--테이블정보확인
+		SELECT * 
+		FROM user_tables 
+		WHERE table_name='table명';
+		//오라클에 저장되는 테이블명,컬럼명은 무조건 대문자로 저장된다
+		
+		--컬럼확인
+		DESC table명;
+ 	
+ 		--가상컬럼
+ 		SELECT ename, sal, rownum
+		FROM emp;
+		//rownum이라는 컬럼이 생성되고 1부터 차례대로  순서가 정해진다
+
+
+		SELECT ename, sal, rownum
+		FROM emp
+		WHERE rownum<=5
+		ORDER BY sal DESC; 
+		//문장 실행 순서가 where이 더 빠르기 때문에 
+		//내림차순 정렬해서 가져올 수 없다
+		
+		==> 순서를 바꿔줘야함
+		SELECT ename, sal, rownum
+		FROM (SELECT ename,sal FROM emp ORDER BY sal DESC)
+		WHERE rownum<=5
+		
+		
+		
+
+	==============================================================================
+ 	
  	
  	
  	
