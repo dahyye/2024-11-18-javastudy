@@ -1,7 +1,7 @@
 package com.sist.main;
 import javax.swing.*;
 
-import com.sist.dao.EmpDAO;
+import com.sist.dao.*;
 import com.sist.vo.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -20,6 +20,7 @@ public class UserMain extends JFrame implements ActionListener, MouseListener{
 	//화면을 모아서 관리
 	EmpListPanel ep = new EmpListPanel();
 	EmpFindPanel efp = new EmpFindPanel();
+	FoodListPanel fp = new FoodListPanel();
 	public UserMain()
 	{
 		//Jmenu -> 상단의 메뉴바의 한 칸 / 여러개의 메뉴 아이템을 가진다
@@ -47,6 +48,7 @@ public class UserMain extends JFrame implements ActionListener, MouseListener{
 		
 		add("EFP",efp); //컨테이너(카드) 임의의 이름을 지정
 		add("EP",ep);
+		add("FP",fp);
 		
 		
 		empDataPrint();
@@ -87,6 +89,30 @@ public class UserMain extends JFrame implements ActionListener, MouseListener{
 					vo.getDvo().getLoc()
 			};
 			ep.model.addRow(data);
+		}
+		
+		
+	}
+	
+	public void foodDataPrint()
+	{
+		//오라클연결
+		FoodDAO dao =  FoodDAO.newInstance();
+		int page=1;
+		List<FoodVO> list = dao.foodListData(page);
+		for(FoodVO vo : list)
+		{
+			System.out.println(vo.getFno()+". "+vo.getName()+ ":"+vo.getType());
+		}
+		for(FoodVO vo : list)
+		{
+			String[] data = {
+					String.valueOf(vo.getFno()),
+					vo.getName()
+					,vo.getType()
+					,vo.getPhone()
+			};
+			fp.model.addRow(data);
 		}
 		
 		
@@ -158,6 +184,13 @@ public class UserMain extends JFrame implements ActionListener, MouseListener{
 			//데이터는 대소문자 구분이 필요하기 때문에
 			//대문자로 바꿔서 보내야 소문자를 입력했을 때도 결과값을 받을 수 있다
 		}
+		else if(e.getSource()==foodItem)
+		{
+			card.show(getContentPane(), "FP"); 
+			foodDataPrint();
+			//화면바꾸기
+			//웹에서는 <a href="list.jsp">
+		}
 		
 	}
 
@@ -171,7 +204,7 @@ public class UserMain extends JFrame implements ActionListener, MouseListener{
 			{
 				// 사번 
 				int row=ep.table.getSelectedRow();
-				//if(row==0) return;
+				if(row==0) return;
 				String empno=
 						ep.model.getValueAt(row, 0).toString();
 				//OptionPane.showMessageDialog(this, empno);
