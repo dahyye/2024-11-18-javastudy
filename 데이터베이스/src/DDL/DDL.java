@@ -358,9 +358,9 @@ package DDL;
 			[제약조건],
 			[제약조건],
 			-------------------------------------- PROMARY KEY
-									CHECK
-									UNIQUE
-									FOREIGN
+									CHECK 
+									UNIQUE -> 중복없는 데이터 
+									FOREIGN -> 외래키 (참조키)
 		)
 
 		

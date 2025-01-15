@@ -26,10 +26,12 @@ public class GenieMusicMain {
 				
 				Document doc=Jsoup.connect(url[i]).get();
 				Elements title=doc.select("table.list-wrap a.title");
+				System.out.println(title);
 				Elements singer=doc.select("table.list-wrap a.artist");
 				Elements album=doc.select("table.list-wrap a.albumtitle");
 				Elements poster=doc.select("table.list-wrap a.cover img");
 				Elements etc=doc.select("table.list-wrap span.rank");
+				
 				System.out.println(url[i]);
 				for(int j=0;j<title.size();j++)
 				{

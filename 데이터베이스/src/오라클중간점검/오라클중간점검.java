@@ -200,7 +200,167 @@ package 오라클중간점검;
 		  [WHERE 조건]
 		  
 		  
-	DDL : 	  
+	DDL : 정의언어 
+		 -> 저장장소(table), 함수(function), 기능처리(procedure), 
+		 	가상테이블(재사용->view)
+		 	자동증가번호(sequence)
+		 	자동이벤트 처리 -> 자바에서 호출(자동화처리)-> trigger
+		 	--------------------------------------------> 자바에서 호출을 하지 않는다
+		 													(분석하기 어렵다)
+			검색속도 최적화(index)
+			테이블의 동의어 : (전체적 별칭) -> SYNONYM
+			------------------------------------
+			 |리팩토링=>변수/컬럼 => 알아보기 쉽게 변경
+			 
+			 명령어
+			 CREATE : 생성
+			 	CREATE TABLE -> user_tables에 저장
+			 	CREATE SEQUENCE -> user_sequences
+			 	CREATE OR REPLACE VIEW -> user_views
+			 	CREATE OR REPLACE FUNCTION -> user_functions
+			 	CREATE OR REPLACE PROCEDURE -> user_pricedures
+			 	CREATE OR REPLACE TRIGGER -> user_trigger
+			 	CREATE INDEX
+			 DROP : 삭제
+			 	DROP TABLE/ DROP INDEX
+			 			 
+			 	==>CREATE로 생성 DROP으로 삭제
+			 ALTER : 수정
+			 		-----> table수정이 가장 많다
+			 	ADD : 컬럼추가/제약조건 추가
+			 	DROP COLUMN : 컬럼삭제
+			 	DROP CONSTRAIN : 제약조건 삭제
+			 	MODIFY : 수정 => 컬럼(크기), 제약조건 추가
+			 RENAME : 이름 변경
+			 	table 변경
+			 	-> RENAME old_name TO new_name
+			 	column변경
+			 	-> ALTER TABLE table_name RENAME COLUMN old TO new
+			TRUNCATE : 데이터 잘라내기 -> 테이블 구조 유지
+			----------------------> 크롤링
+			=> 한 번에처리 / DELETE -> 한줄씩 처리(COMMIT)
+			
+			
+			
+		=> 테이블 제작
+			식별자 (테이블명, 컬럼명 적용)
+			 XE(데이터베이스) : 테이블저장 공간, hr(접근 유저명)
+			-------------	   ----
+				폴더			파일
+				-> 테이블은 같은 이름을 사용할 수 없다
+				
+		=> 형식
+			재사용
+			CREATE TABLE table_name
+			AS
+			 SELECT ~~
+			-------------------------- 테이블 생성+데이터추가
+			CREATE TABLE table_name
+			AS
+			 SELECT ~
+			 FROM 이전테이블
+			 WHERE 1=2 
+			 	   ---- 아무거나 조건이 false로 만들어서 사용
+			----------------------------- 테이블만 생성(조건이 전부 false이기 떄문에 값은 가져오지 않아)
+			
+			사용자정의
+			CREATE TABLE table_name
+			(
+				컬럼명 데이터형 [제약조건] => 제약조건은 여러개를 사용할 수 있다
+				예) name VARCHAR2(10) NOT NULL UNIAUE
+				   -> DEFAULT를 사용하려면 가장 앞에 설정
+				  -> 컬럼뒤에  설정 제약조건 : NOT NULL, default
+			)
+			-특별한 경우가 아니면 PRIMARY KEY는 한 개만 설정하는게 좋다
+			
+	     ----------------------------------------------------------------------------------------
+			
+			자동 증가번호 : SEQUENCE
+			1. 생성
+				-> 회원가입제외(id) -> 나머지는 숫자 중복제거
+				CREATE SEQUENCE seq명
+					START WITH 1 -> 1부터 시작
+					INCREMENT BY 1 -> 1씩 증가
+			 		NOCACHE -> 저장하지 않는다
+			 		NOCYCLE -> 다시 처음부터 시작하지 않는다
+			 	**PRIMARY KEY가 존재하는 모든 테이블에 시퀀스를 따로 생성해줘야한다
+			 							(테이블당 시퀀스 1개)
+			 								-> 시퀀스대신 사용 -> SELECT NVL(MAX(컬럼)+1,1) FROM 테이블명
+			2. 초기화 / 삭제
+				DROP SEQUENCE seq명
+								
+			3. 값을 가지고 오는 경우
+				현재값 : 시퀀스명.currval
+				다음값 : 시퀀스명.nextval -> 데이터추가시에
+				*단점 : 계속 증가만 된다(데이터 삭제시에 번호를 복구할 수 없다)
+				*
+			
+			동의어(테이블) SYNONYM
+			--------------이전 테이블명과 동의와와 동시에 사용 가능
+			사용자 계정에서 생성할 권한이 없다
+				시스템계정으로 접근 -> 권한부여 -> 사용자계정 접근
+				conn system/happy
+				grant create synonym to hr  / revoke create synonym from hr
+				conn hr/happy
+				
+			생성
+				CREATE PUBLIC SYNONYM 별칭 FOR 실제 테이블명
+			삭제
+				DROP SYNONYM 시노님명
+				
+			
+			--------------------------------------------------------------------------------------
+			
+			VIEW 생성
+			 = 보안, 한 개 이상의 테이블 참조해서 가삿ㅇ으로 테이블 생성
+			   ---- 실제 데이터를 저장하지 않는다(select문장)
+			   VIEW 저장된 값 확인
+			   	SELECT text FROM user_views
+			   	WHERE view_name='VIEW명'
+			   
+			 = 사용처 => 보안이 필요한 부분(세션에 저장) 
+			 			=> 자동로그인, SQL문장이 길 때
+			 
+		 	
+	DCL : 권한부여, 권한해제 => 사용자계정(hr)은 권한이 없는 것이 많다
+	 	  --------------> 관리자계정에서(system/sysdba)
+	 	  권한부여 : GRANT
+	 	  	GRANT CREATE VIEW TO hr
+	 	  권한해제 : REVOKE
+	 	  	REVOKE CREATE VIEW FROM hr
+	 	  	
+	TCL : 트랜잭션 -> 일괄처리
+		  정상적 저장, 모든 명령어 취소(비정상)
+		  COMMIT	ROLLBACK
+		  -> java : default => autocommit
+		 자바에서 SQL문장을 여러개 동시수행 하는 경우가 있다
+		 				------------> 답변형게시판/대댓글
+		 답변 / 삭제 => 5개의 SQL문장을 수행
+		 => 자바에서 트랜잭션 설정을 한다
+		 
+		 try
+		 {
+		 	getConnetion();
+		 	conn.setAutoCommit(false);//Commit해제
+		 	SQL
+		 	SQL
+		 	SQL
+		 	conn.commit()
+		 	
+		 }catch(Exception e)
+		 {
+		 	conn.rollback()
+		 }
+		 finally
+		 {
+		 	conn.setAutocommit(true);
+		 	disConnection();
+		 }
+		 
+		 ==> 이 과정을 스프링에서 하면 => @Transactional 사용하면 끝
+	 	  
+	 	  
+	TCL : 
  		
  */
 public class 오라클중간점검 {
