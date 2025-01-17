@@ -32,7 +32,7 @@ public class BoardMainForm extends JFrame implements ActionListener,MouseListene
     	add("UPDATE",bUpdate);
     	add("DELETE",bDelete);
     	
-    	setTitle("윈도우 게시판 ver 1.0");
+    	//setTitle("윈도우 게시판 ver 1.0");
     	listPrint();
     	setSize(640, 550);
     	setVisible(true);
