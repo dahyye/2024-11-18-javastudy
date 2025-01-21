@@ -15,6 +15,7 @@ public class FoodFindpanel extends JPanel implements ActionListener, MouseListen
 	ControlPanel cp; //상세보기
 	JTable table; //모양관리
 	DefaultTableModel model; //데이터관리
+	JComboBox combo;
 	JTextField tf;
 	JButton b;
 	TableColumn column;
@@ -72,17 +73,20 @@ public class FoodFindpanel extends JPanel implements ActionListener, MouseListen
     			column.setPreferredWidth(80);
     		
     	}
+		String[] search= {" ","주소","이름","음식타입"};
+		combo= new JComboBox(search);
+		
 		b=new JButton("검색");
 		tf=new JTextField();
 		
 		setLayout(null);
-		
-		tf.setBounds(20,20,200,30);
-		b.setBounds(225,20,80,30);
+		combo.setBounds(20,20,100,30);
+		tf.setBounds(130,20,200,30);
+		b.setBounds(340,20,80,30);
 		
 		js1.setBounds(20,60,800,500);
 		
-		add(tf); add(b);
+		add(combo); add(tf); add(b);
 		
 		add(js1);
 		
@@ -97,19 +101,39 @@ public class FoodFindpanel extends JPanel implements ActionListener, MouseListen
 		if(e.getSource()==b||e.getSource()==tf)
 		{
 			
-			String address=tf.getText();
-			if(address.trim().length()<1)
+			String search=tf.getText();
+			if(search.trim().length()<1)
 			{
 				JOptionPane.showMessageDialog(this, "검색어를 입력하세요");
 				tf.requestFocus();
 				return;
 			}
 			
-			print(address);
+			if(combo.getSelectedItem()=="주소")
+			{
+				
+				print("address",search);
+			}
+			else if(combo.getSelectedItem()=="이름")
+			{
+				
+				print("name",search);
+			}
+			else if(combo.getSelectedItem()=="음식타입")
+			{
+	
+				print("type",search);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(this, "검색조건을 선택하세요");
+			}
+			
+			//print(address);
 		}
 	}
 	
-	public void print(String address)
+	public void print(String type, String search)
 	{
 		
 		//데이터 지우기
@@ -119,7 +143,7 @@ public class FoodFindpanel extends JPanel implements ActionListener, MouseListen
 		}
 		
 		//데이터읽기
-		List<FoodVO> list=dao.foodFindData(address);
+		List<FoodVO> list=dao.foodFindData(type, search);
 		if(list.size()==0)
 		{
 			JOptionPane.showMessageDialog(this, "검색결과가 없습니다");

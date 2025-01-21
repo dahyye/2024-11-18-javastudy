@@ -266,7 +266,7 @@ implements ActionListener,Runnable, MouseListener
 		}
 		else if(e.getSource()==mf.b7)
 		{
-			cp.card.show(cp, "DETAIL");
+			cp.card.show(cp, "NP");
 		}
 		else if(e.getSource()==mf.b5)
 		{

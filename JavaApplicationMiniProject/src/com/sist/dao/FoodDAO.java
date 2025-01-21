@@ -261,17 +261,47 @@ public class FoodDAO {
 	}
 	
 	//4. 검색 -> 주소
-	public List<FoodVO> foodFindData(String address)
+	public List<FoodVO> foodFindData(String type, String search)
 	{
 		List<FoodVO> list = new ArrayList<FoodVO>();
 		try {
 			getConnection();
+//			if(type=="address")
+//			{
+//				String sql="SELECT fno,poster,name,address,type, score, rownum "
+//						+ "FROM food_menupan "
+//						+ "WHERE  "
+//						+ "LIKE '%'||?||'%' AND rownum<=20 "
+//						+ "ORDER BY fno ASC";
+//				ps=conn.prepareStatement(sql);
+//			}
+//			else if(type=="name")
+//			{
+//				String sql="SELECT fno,poster,name,address,type, score, rownum "
+//						+ "FROM food_menupan "
+//						+ "WHERE  "+쇼ㅔㄷ
+//						+ "LIKE '%'||?||'%' AND rownum<=20 "
+//						+ "ORDER BY fno ASC";
+//				ps=conn.prepareStatement(sql);
+//				
+//			}else if(type=="type")
+//			{
+//				String sql="SELECT fno,poster,name,address,type, score, rownum "
+//						+ "FROM food_menupan "
+//						+ "WHERE type "
+//						+ "LIKE '%'||?||'%' AND rownum<=20 "
+//						+ "ORDER BY fno ASC";
+//				ps=conn.prepareStatement(sql);
+//			}
 			String sql="SELECT fno,poster,name,address,type, score, rownum "
 					+ "FROM food_menupan "
-					+ "WHERE address LIKE '%'||?||'%' AND rownum<=10 "
+					+ "WHERE "+type
+					+ " LIKE '%'||?||'%' AND rownum<=20 "
 					+ "ORDER BY fno ASC";
+			
 			ps=conn.prepareStatement(sql);
-			ps.setString(1, address);
+			
+			ps.setString(1, search);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next())
 			{
@@ -284,6 +314,7 @@ public class FoodDAO {
 				vo.setScore(rs.getDouble(6));
 				list.add(vo);
 			}
+			System.out.println(list.size());
 			rs.close();
 			
 		} catch (Exception e) {
@@ -296,5 +327,7 @@ public class FoodDAO {
 	}
 	
 	
+	
+
 	
 }

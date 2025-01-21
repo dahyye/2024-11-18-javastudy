@@ -7,7 +7,7 @@ import com.sist.vo.*;
 import com.sist.dao.*;
 
 
-public class BoardReply extends JPanel{
+public class BoardReply extends JPanel implements ActionListener{
     JLabel titleLa,nameLa,subLa,contLa,pwdLa,noLa;
     JTextField nameTf,subTf;
     JPasswordField pwdPf;
@@ -65,7 +65,62 @@ public class BoardReply extends JPanel{
     	p.setBounds(100, 435, 535, 35);
     	add(p);
     	
-    	
+    	b1.addActionListener(this); //답변
+    	b2.addActionListener(this); //취소
     	
     }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource()==b2) //취소하기
+		{
+			cp.card.show(cp, "BDETAIL");
+			
+		}
+		if(e.getSource()==b1) //답변하기
+		{
+			String name=nameTf.getText();
+			if(name.trim().length()<1)
+			{
+				nameTf.requestFocus();
+				return;
+			}
+			String subject=subTf.getText();
+			if(subject.trim().length()<1)
+			{
+				subTf.requestFocus();
+				return;
+			}
+			String content=ta.getText();
+			if(content.trim().length()<1)
+			{
+				ta.requestFocus();
+				return;
+			}
+			String pwd=String.valueOf(pwdPf.getPassword());
+			if(pwd.trim().length()<1)
+			{
+				pwdPf.requestFocus();
+				return;
+			}
+			
+			String no=noLa.getText();
+			
+			ReplyBoardVO vo = new ReplyBoardVO();
+			vo.setName(name);
+			vo.setSubject(subject);
+			vo.setContent(content);
+			vo.setPwd(pwd);
+			
+			
+			//오라클연결
+			ReplyBoardDAO dao = ReplyBoardDAO.newInstance();
+			dao.replyInsert(Integer.parseInt(no), vo);
+			
+			//목록
+			cp.card.show(cp, "BLIST");
+			cp.bList.print();//호출을 안하면 그 전 내용을 보여주기때문에 꼭 업데이트 해야함
+			
+		}
+	}
 }

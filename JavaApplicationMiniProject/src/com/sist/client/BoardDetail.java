@@ -105,7 +105,7 @@ public class BoardDetail extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource()==b3) //취소
+		if(e.getSource()==b3) //목록
 		{
 			cp.card.show(cp, "BLIST");
 			cp.bList.print();
@@ -122,12 +122,26 @@ public class BoardDetail extends JPanel implements ActionListener{
 			cp.card.show(cp, "BUPDATE");
 			cp.bUpdate.print(vo);
 		}
-		else if(e.getSource()==b2) //삭제
+		else if(e.getSource()==b2) //삭제https://www.snuh.org/content/M001004005.do
 		{
-			
-		}
+			String strNo=no.getText();
+			cp.bDelete.pf.setText("");
+			cp.card.show(cp, "BDELETE");
+			cp.bDelete.noLa.setText(strNo);
+			cp.bDelete.pf.requestFocus();
+			}
 		else if(e.getSource()==b4) //답변
 		{
+			String strNo=no.getText(); //번호
+			//초기화
+			//윈도우는 화면 변경할 때 초기화가 안된다 -> 따로 초기화해줘야해
+			
+			cp.bReply.nameTf.setText("");
+			cp.bReply.subTf.setText("");
+			cp.bReply.ta.setText("");
+			//화면이동
+			cp.card.show(cp, "BREPLY");
+			cp.bReply.noLa.setText(strNo);
 			
 		}
 	}

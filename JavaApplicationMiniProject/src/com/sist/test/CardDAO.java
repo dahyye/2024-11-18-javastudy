@@ -62,7 +62,7 @@ public class CardDAO {
 			ps.setInt(2, price);
 			ps.executeUpdate();
 			
-			sql="INSERT INTO myPoint VALUES(SELECT NVL(MAX(no)+1,1) FROM myPoint),?,?)";
+			sql="INSERT INTO myPoint VALUES(1,?,?)";
 			ps=conn.prepareStatement(sql);
 			ps.setString(1, id);
 			ps.setInt(2, price);
@@ -76,8 +76,19 @@ public class CardDAO {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				
+			}
 		}
 		finally {
+			try {
+				conn.setAutoCommit(true);
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
 			disConnection();
 		}
 	}
@@ -85,7 +96,7 @@ public class CardDAO {
 	
 	public static void main(String[] args) {
 		CardDAO dao= CardDAO.newInstance();
-		dao.cardInser("hong", 30000);
+		dao.cardInser("park", 30000);
 	}
 	
 	

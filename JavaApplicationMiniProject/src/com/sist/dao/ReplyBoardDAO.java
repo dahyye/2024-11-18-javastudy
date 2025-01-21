@@ -1,5 +1,6 @@
 package com.sist.dao;
 import java.util.*;
+import java.beans.Transient;
 import java.sql.*;
 import com.sist.vo.*;
 
@@ -110,22 +111,24 @@ public class ReplyBoardDAO {
 		return list;
 	}
 	
-	public int BoardTotalpage()
+	public int boardRowCount()
 	{
 		int total=0;
-		try {
+		try
+		{
 			getConnection();
-			String sql="SELECT CEIL(COUNT(*)/10.0) FROM replyBoard";
+			String sql="SELECT COUNT(*) FROM replyBoard";
 			ps=conn.prepareStatement(sql);
 			ResultSet rs=ps.executeQuery();
 			rs.next();
 			total=rs.getInt(1);
 			rs.close();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
 		}
-		finally {
+		finally
+		{
 			disConnection();
 		}
 		return total;
@@ -312,9 +315,10 @@ public class ReplyBoardDAO {
 		}
 		return bCheck;
 	}
-	// 5. 답변하기 -> 트랜잭션
 	
-	/*
+	
+	// 5. 답변하기 -> 트랜잭션
+/*
 		 
 	
 	try 
@@ -344,11 +348,185 @@ public class ReplyBoardDAO {
 	
 	
 	 */
+	/*
+	 							group_id		group_step		group_tab	root	depth
+	 	AAAAA						1				0				0		  		  2
+	 		=>DDDD(새댓글)			1				1				1
+	 		=>BBBB					1				1				1
+	 		  =>CCCCCC				1				2				2
+	 	    
+	 	ASC
+	 
+	 	
+	 
+	 */
+	
+	public void replyInsert(int pno, ReplyBoardVO vo)
+	{
+		try {
+			getConnection();
+			conn.setAutoCommit(false);
+			//sql 4개
+			//첫번쨰 sql
+			String sql="SELECT group_id,group_step,group_tab FROM replyBoard WHERE no="+pno;
+			ps=conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			
+			int gi=rs.getInt(1);
+			int gs=rs.getInt(2);
+			int gt=rs.getInt(3);
+			rs.close();
+			
+			//2번째 sql -> group_step을 변경 -> 답변 핵심
+			sql="UPDATE replyBoard SET group_step=group_step+1 WHERE group_id=? AND group_step>?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, gi);
+			ps.setInt(2, gs);
+			ps.executeUpdate();
+
+			//3번째 sql -> INSERT
+			sql="INSERT INTO replyBoard(no,name,subject,content,pwd,group_id,group_step,group_tab,root) "
+					+ "VALUES(rb_no_seq.nextval,?,?,?,?,?,?,?,?)";
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, vo.getName());
+			ps.setString(2, vo.getSubject());
+			ps.setString(3, vo.getContent());
+			ps.setString(4, vo.getPwd());
+			ps.setInt(5, gi);
+			ps.setInt(6, gs+1);
+			ps.setInt(7, gt+1);
+			ps.setInt(8, pno);
+			ps.executeUpdate();
+			
+			
+			//4번째 sql -> UPDATE 
+			sql="UPDATE replyBoard SET depth=depth+1 WHERE no="+pno;
+			ps=conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			rs.next();
+			
+			
+			
+			conn.commit();
+		} catch (Exception e) {
+			//트랜젝션을 일괄처리 -> 스프링에서는 1챕터로 나와(그만큼 중요) 
+			try {
+				conn.rollback(); //명령문 전체 취소
+				
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				conn.setAutoCommit(true);//원상복귀
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+			disConnection();
+			
+		}
+	}
+	
 	 
 	
 	// 6. 삭제  	 -> 트랜잭션
 
-	
+	public boolean replyDelete(int no,String pwd)
+	{
+		boolean bCheck=false;
+		/*
+		 1. 비밀번호 확인
+		 2. depth 
+		 	=> 0이면 delete
+		 	=> 0보다 크면 update
+		 3. depth 감소 update
+		 		 
+		 */
+		
+		try {
+			getConnection();
+			conn.setAutoCommit(false);
+			String sql="SELECT pwd,root,depth FROM replyBoard WHERE no="+no;
+			ps=conn.prepareStatement(sql);
+			ResultSet rs=ps.executeQuery();
+			rs.next();
+			String db_pwd=rs.getString(1);
+			int root=rs.getInt(2);
+			int depth=rs.getInt(3);
+			
+			rs.close();
+			
+			
+			if(db_pwd.equals(pwd))
+			{
+				bCheck=true;
+				//삭제
+				if(depth==0) //글에 대한 답변이 없는 경우
+				{
+					sql="DELETE FROM replyBoard WHERE no="+no;
+					ps=conn.prepareStatement(sql);
+					ps.executeUpdate();
+				}
+				else //글에 대한 답변이 있는 경우
+				{
+					String msg="관리자가 삭제한 게시물입니다";
+					sql="UPDATE replyBoard SET subject=?,content=? WHERE no="+no;
+					ps=conn.prepareStatement(sql);
+					ps.setString(1, msg);
+					ps.setString(2, msg);
+					ps.setInt(3, no);
+					ps.executeUpdate();
+					
+				}
+				
+				sql="SELECT depth FROM replyBoard WHERE no="+root;
+				ps=conn.prepareStatement(sql);
+				rs=ps.executeQuery();
+				rs.next();
+				
+				int d=rs.getInt(1);
+				rs.close();
+				//if(d>0)
+				{
+					sql="UPDATE replyBoard SET depth=depth-1 WHERE no="+root;
+					ps=conn.prepareStatement(sql);
+					ps.executeUpdate();
+				}
+				
+			}
+			else
+			{
+				bCheck=false;
+				
+			}
+			
+			
+			
+			conn.commit();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				conn.setAutoCommit(true);
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+			disConnection();
+		}
+		//나중에는 @Transactional 간단하게 사용할 수 있다
+		return bCheck;
+	}
 
 	
 }

@@ -18,6 +18,9 @@ public class ControlPanel extends JPanel{
 	BoardInsert bInsert;
 	BoardDetail bDetail;
 	BoardUpdate bUpdate;
+	BoardReply bReply;
+	BoardDelete bDelete;
+	NewsPanel np;
 	CardLayout card = new CardLayout();
 	
 	public ControlPanel()
@@ -41,6 +44,26 @@ public class ControlPanel extends JPanel{
 		add("BDETAIL",bDetail);
 		bUpdate= new BoardUpdate(this);
 		add("BUPDATE",bUpdate);
+		bReply = new BoardReply(this);
+		add("BREPLY",bReply);
+		bDelete = new BoardDelete(this);
+		add("BDELETE",bDelete);
+		np = new NewsPanel(this);
+		add("NP",np);
+		
+		/*
+		 
+		 사용자 요청 -> ControlPanel -> 화면이동
+		 						필요한 데이터 전송
+		 						
+		 사용자 요청 -> Controller -> Model -> 화면이동(view)
+		 								  |
+		 								  |
+		 								 데이터 전송
+		 --------------------------------------------------> Spring의 MVC
+		 								  
+		 
+		 */
 	}
 
 	
