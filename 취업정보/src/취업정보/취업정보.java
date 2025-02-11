@@ -89,8 +89,9 @@
  	html은 RestFull이 나와
  		(GET / POST / PUT / DELETE )
  	
- 	
- 	
+ 	면접 질문
+ 	BACK -> AWS로 뭘 해봤는지, DevOps(ci/cd)
+ 	Front -> NodeJS
  	
  	
  */
