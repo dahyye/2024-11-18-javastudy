@@ -94,6 +94,9 @@
  	Front -> NodeJS
  	
  	
+ 	요즘 nodejs + typescript 해봤는지 물어보는경우가 많아
+ 	
+ 	
  */
 
 
